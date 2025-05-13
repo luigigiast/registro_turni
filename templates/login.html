@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Aggiungi il link CDN di Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            background-color: #f4f6f9;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+        img {
+            display: block;
+            margin: 0 auto 20px;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .form-group input, .form-group button {
+            width: 100%;
+            padding: 10px;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <img src="{{ url_for('static', filename='download.png') }}" alt="Logo" width="150">
+        <h2>Benvenuti nel registro delle presenze</h2>
+
+        <!-- Se non c'è fine turno, mostra il modulo di login -->
+        {% if not fine_turno %}
+        <form method="post">
+            <div class="form-group">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Accedi</button>
+        </form>
+        {% endif %}
+
+        <!-- Mostra messaggi di errore o successo -->
+        {% if messaggio %}
+            <div class="alert alert-info">
+                <strong>{{ messaggio }}</strong>
+            </div>
+        {% endif %}
+
+        <!-- Se il turno è finito, mostra il pulsante di fine turno -->
+        {% if fine_turno %}
+        <form method="post" action="/fine-turno">
+            <button type="submit" class="btn btn-danger btn-block">Fine turno</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <!-- Aggiungi i file JS di Bootstrap per il corretto funzionamento delle interazioni -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
